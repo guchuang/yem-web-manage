@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yem.web.manage.dao.YemRoleMapper">
+	<resultMap id="BaseResultMap" type="com.yem.entity.YemRole">
+		<id column="role_id" jdbcType="VARCHAR" property="roleId" />
+		<result column="role_code" jdbcType="BIGINT" property="roleCode" />
+		<result column="role_name" jdbcType="VARCHAR" property="roleName" />
+		<result column="valid" jdbcType="BIT" property="valid" />
+		<result column="description" jdbcType="VARCHAR" property="description" />
+		<result column="create_time" jdbcType="DATE" property="createTime" />
+		<result column="create_by" jdbcType="BIGINT" property="createBy" />
+		<result column="update_time" jdbcType="DATE" property="updateTime" />
+		<result column="update_by" jdbcType="BIGINT" property="updateBy" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		role_id, role_code, role_name, valid, description, create_time, create_by, update_time,
+		update_by
+	</sql>
+	<select id="selectByRoleCode" parameterType="java.lang.Long"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from yem_role
+		where role_code = #{roleCode,jdbcType=BIGINT}
+	</select>
+
+	<insert id="insertSelective" parameterType="com.yem.entity.YemRole">
+		insert into yem_role
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="roleId != null">
+				role_id,
+			</if>
+			<if test="roleCode != null">
+				role_code,
+			</if>
+			<if test="roleName != null">
+				role_name,
+			</if>
+			<if test="valid != null">
+				valid,
+			</if>
+			<if test="description != null">
+				description,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="createBy != null">
+				create_by,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="updateBy != null">
+				update_by,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="roleId != null">
+				#{roleId,jdbcType=VARCHAR},
+			</if>
+			<if test="roleCode != null">
+				#{roleCode,jdbcType=BIGINT},
+			</if>
+			<if test="roleName != null">
+				#{roleName,jdbcType=VARCHAR},
+			</if>
+			<if test="valid != null">
+				#{valid,jdbcType=BIT},
+			</if>
+			<if test="description != null">
+				#{description,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=DATE},
+			</if>
+			<if test="createBy != null">
+				#{createBy,jdbcType=BIGINT},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=DATE},
+			</if>
+			<if test="updateBy != null">
+				#{updateBy,jdbcType=BIGINT},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByRoleCodeSelective" parameterType="com.yem.entity.YemRole">
+		update yem_role
+		<set>
+			<if test="roleCode != null">
+				role_code = #{roleCode,jdbcType=BIGINT},
+			</if>
+			<if test="roleName != null">
+				role_name = #{roleName,jdbcType=VARCHAR},
+			</if>
+			<if test="valid != null">
+				valid = #{valid,jdbcType=BIT},
+			</if>
+			<if test="description != null">
+				description = #{description,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=DATE},
+			</if>
+			<if test="createBy != null">
+				create_by = #{createBy,jdbcType=BIGINT},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=DATE},
+			</if>
+			<if test="updateBy != null">
+				update_by = #{updateBy,jdbcType=BIGINT},
+			</if>
+		</set>
+		where role_code = #{roleCode,jdbcType=BIGINT}
+	</update>
+
+	<select id="selectRoleList" parameterType="com.yem.dto.YemRoleDTO"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from yem_role
+		where 1 = 1
+		<if test="roleCode != null and roleCode != ''">
+			and role_code = #{roleCode,jdbcType=BIGINT}
+		</if>
+		<if test="roleName != null and roleName != ''">
+			and role_name = #{roleName,jdbcType=VARCHAR}
+		</if>
+		<if test="valid != null and valid != ''">
+			and valid = #{valid,jdbcType=BIT}
+		</if>
+		<if test="createTime != null and createTime != ''">
+			and create_time = #{createTime,jdbcType=DATE}
+		</if>
+		limit #{start, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
+	</select>
+
+	<select id="selectRoleListCount" parameterType="com.yem.dto.YemRoleDTO"
+		resultType="java.lang.Integer">
+		select
+		count(role_id) as cnt
+		from yem_role
+		where 1 = 1
+		<if test="roleCode != null and roleCode != ''">
+			and role_code = #{roleCode,jdbcType=BIGINT}
+		</if>
+		<if test="roleName != null and roleName != ''">
+			and role_name = #{roleName,jdbcType=VARCHAR}
+		</if>
+		<if test="valid != null and valid != ''">
+			and valid = #{valid,jdbcType=BIT}
+		</if>
+		<if test="createTime != null and createTime != ''">
+			and create_time = #{createTime,jdbcType=DATE}
+		</if>
+	</select>
+	
+	<select id="selectRoleListByUserCode" parameterType="java.lang.Long"
+		resultMap="BaseResultMap">
+		select
+		yr.role_id, yr.role_code, yr.role_name, yr.valid, yr.description, yr.create_time, 
+		yr.create_by, yr.update_time,
+		update_by
+		from yem_role yr inner join yem_user_role yur
+		on yr.role_code = yur.role_code 
+		where yur.user_code = #{roleCode, jdbcType=BIGINT}
+	</select>
+</mapper>

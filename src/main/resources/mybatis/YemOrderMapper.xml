@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yem.web.manage.dao.YemOrderMapper">
+  <resultMap id="BaseResultMap" type="com.yem.entity.YemOrder">
+    <id column="order_id" jdbcType="VARCHAR" property="orderId" />
+    <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
+    <result column="member_code" jdbcType="BIGINT" property="memberCode" />
+    <result column="server_code" jdbcType="BIGINT" property="serverCode" />
+    <result column="shop_code" jdbcType="BIGINT" property="shopCode" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="order_type" jdbcType="BIT" property="orderType" />
+    <result column="payment_type" jdbcType="BIT" property="paymentType" />
+    <result column="amt" jdbcType="DECIMAL" property="amt" />
+    <result column="payment_amt" jdbcType="DECIMAL" property="paymentAmt" />
+    <result column="disamt" jdbcType="DECIMAL" property="disamt" />
+    <result column="change_amt" jdbcType="DECIMAL" property="changeAmt" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="valid" jdbcType="BIT" property="valid" />
+    <result column="create_time" jdbcType="DATE" property="createTime" />
+    <result column="create_by" jdbcType="BIGINT" property="createBy" />
+    <result column="update_time" jdbcType="DATE" property="updateTime" />
+    <result column="update_by" jdbcType="BIGINT" property="updateBy" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    order_id, order_no, member_code, server_code, shop_code, mobile, order_type, payment_type, 
+    amt, payment_amt, disamt, change_amt, remark, valid, create_time, create_by, update_time, 
+    update_by
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from yem_order
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from yem_order
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yem.entity.YemOrder">
+    insert into yem_order (order_id, order_no, member_code, 
+      server_code, shop_code, mobile, 
+      order_type, payment_type, amt, 
+      payment_amt, disamt, change_amt, 
+      remark, valid, create_time, 
+      create_by, update_time, update_by
+      )
+    values (#{orderId,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR}, #{memberCode,jdbcType=BIGINT}, 
+      #{serverCode,jdbcType=BIGINT}, #{shopCode,jdbcType=BIGINT}, #{mobile,jdbcType=VARCHAR}, 
+      #{orderType,jdbcType=BIT}, #{paymentType,jdbcType=BIT}, #{amt,jdbcType=DECIMAL}, 
+      #{paymentAmt,jdbcType=DECIMAL}, #{disamt,jdbcType=DECIMAL}, #{changeAmt,jdbcType=DECIMAL}, 
+      #{remark,jdbcType=VARCHAR}, #{valid,jdbcType=BIT}, #{createTime,jdbcType=DATE}, 
+      #{createBy,jdbcType=BIGINT}, #{updateTime,jdbcType=DATE}, #{updateBy,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yem.entity.YemOrder">
+    insert into yem_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="orderNo != null">
+        order_no,
+      </if>
+      <if test="memberCode != null">
+        member_code,
+      </if>
+      <if test="serverCode != null">
+        server_code,
+      </if>
+      <if test="shopCode != null">
+        shop_code,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="orderType != null">
+        order_type,
+      </if>
+      <if test="paymentType != null">
+        payment_type,
+      </if>
+      <if test="amt != null">
+        amt,
+      </if>
+      <if test="paymentAmt != null">
+        payment_amt,
+      </if>
+      <if test="disamt != null">
+        disamt,
+      </if>
+      <if test="changeAmt != null">
+        change_amt,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="valid != null">
+        valid,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null">
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberCode != null">
+        #{memberCode,jdbcType=BIGINT},
+      </if>
+      <if test="serverCode != null">
+        #{serverCode,jdbcType=BIGINT},
+      </if>
+      <if test="shopCode != null">
+        #{shopCode,jdbcType=BIGINT},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="orderType != null">
+        #{orderType,jdbcType=BIT},
+      </if>
+      <if test="paymentType != null">
+        #{paymentType,jdbcType=BIT},
+      </if>
+      <if test="amt != null">
+        #{amt,jdbcType=DECIMAL},
+      </if>
+      <if test="paymentAmt != null">
+        #{paymentAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="disamt != null">
+        #{disamt,jdbcType=DECIMAL},
+      </if>
+      <if test="changeAmt != null">
+        #{changeAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="valid != null">
+        #{valid,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=DATE},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yem.entity.YemOrder">
+    update yem_order
+    <set>
+      <if test="orderNo != null">
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberCode != null">
+        member_code = #{memberCode,jdbcType=BIGINT},
+      </if>
+      <if test="serverCode != null">
+        server_code = #{serverCode,jdbcType=BIGINT},
+      </if>
+      <if test="shopCode != null">
+        shop_code = #{shopCode,jdbcType=BIGINT},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="orderType != null">
+        order_type = #{orderType,jdbcType=BIT},
+      </if>
+      <if test="paymentType != null">
+        payment_type = #{paymentType,jdbcType=BIT},
+      </if>
+      <if test="amt != null">
+        amt = #{amt,jdbcType=DECIMAL},
+      </if>
+      <if test="paymentAmt != null">
+        payment_amt = #{paymentAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="disamt != null">
+        disamt = #{disamt,jdbcType=DECIMAL},
+      </if>
+      <if test="changeAmt != null">
+        change_amt = #{changeAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="valid != null">
+        valid = #{valid,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=BIGINT},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yem.entity.YemOrder">
+    update yem_order
+    set order_no = #{orderNo,jdbcType=VARCHAR},
+      member_code = #{memberCode,jdbcType=BIGINT},
+      server_code = #{serverCode,jdbcType=BIGINT},
+      shop_code = #{shopCode,jdbcType=BIGINT},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      order_type = #{orderType,jdbcType=BIT},
+      payment_type = #{paymentType,jdbcType=BIT},
+      amt = #{amt,jdbcType=DECIMAL},
+      payment_amt = #{paymentAmt,jdbcType=DECIMAL},
+      disamt = #{disamt,jdbcType=DECIMAL},
+      change_amt = #{changeAmt,jdbcType=DECIMAL},
+      remark = #{remark,jdbcType=VARCHAR},
+      valid = #{valid,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=DATE},
+      create_by = #{createBy,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=DATE},
+      update_by = #{updateBy,jdbcType=BIGINT}
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </update>
+</mapper>

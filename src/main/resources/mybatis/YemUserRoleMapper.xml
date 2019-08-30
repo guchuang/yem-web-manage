@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yem.web.manage.dao.YemUserRoleMapper">
+	<resultMap id="BaseResultMap" type="com.yem.entity.YemUserRole">
+		<id column="user_role_id" jdbcType="VARCHAR" property="userRoleId" />
+		<result column="user_code" jdbcType="BIGINT" property="userCode" />
+		<result column="role_code" jdbcType="BIGINT" property="roleCode" />
+		<result column="create_time" jdbcType="DATE" property="createTime" />
+		<result column="create_by" jdbcType="BIGINT" property="createBy" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		user_role_id, user_code, role_code, create_time, create_by
+	</sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from yem_user_role
+		where user_role_id = #{userRoleId,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByUserCode" parameterType="java.lang.Long">
+		delete from yem_user_role
+		where user_code = #{userCode,jdbcType=BIGINT}
+	</delete>
+	<insert id="insertBatch" parameterType="java.util.List">
+		insert into yem_user_role (user_role_id, user_code,
+		role_code,
+		create_time, create_by)
+		values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.userRoleId,jdbcType=VARCHAR},
+			#{item.userCode,jdbcType=BIGINT},
+			#{item.roleCode,jdbcType=BIGINT},
+			#{item.createTime,jdbcType=DATE}, #{item.createBy,jdbcType=BIGINT})
+		</foreach>
+	</insert>
+	<insert id="insertSelective" parameterType="com.yem.entity.YemUserRole">
+		insert into yem_user_role
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userRoleId != null">
+				user_role_id,
+			</if>
+			<if test="userCode != null">
+				user_code,
+			</if>
+			<if test="roleCode != null">
+				role_code,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="createBy != null">
+				create_by,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userRoleId != null">
+				#{userRoleId,jdbcType=VARCHAR},
+			</if>
+			<if test="userCode != null">
+				#{userCode,jdbcType=BIGINT},
+			</if>
+			<if test="roleCode != null">
+				#{roleCode,jdbcType=BIGINT},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=DATE},
+			</if>
+			<if test="createBy != null">
+				#{createBy,jdbcType=BIGINT},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.yem.entity.YemUserRole">
+		update yem_user_role
+		<set>
+			<if test="userCode != null">
+				user_code = #{userCode,jdbcType=BIGINT},
+			</if>
+			<if test="roleCode != null">
+				role_code = #{roleCode,jdbcType=BIGINT},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=DATE},
+			</if>
+			<if test="createBy != null">
+				create_by = #{createBy,jdbcType=BIGINT},
+			</if>
+		</set>
+		where user_role_id = #{userRoleId,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.yem.entity.YemUserRole">
+		update yem_user_role
+		set user_code = #{userCode,jdbcType=BIGINT},
+		role_code = #{roleCode,jdbcType=BIGINT},
+		create_time = #{createTime,jdbcType=DATE},
+		create_by = #{createBy,jdbcType=BIGINT}
+		where user_role_id = #{userRoleId,jdbcType=VARCHAR}
+	</update>
+</mapper>

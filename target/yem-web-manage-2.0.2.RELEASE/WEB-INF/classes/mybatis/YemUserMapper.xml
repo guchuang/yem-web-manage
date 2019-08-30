@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yem.web.manage.dao.YemUserMapper">
+  <resultMap id="BaseResultMap" type="com.yem.entity.YemUser">
+    <id column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="user_code" jdbcType="BIGINT" property="userCode" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="shop_code" jdbcType="BIGINT" property="shopCode" />
+    <result column="sex" jdbcType="BIT" property="sex" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="valid" jdbcType="BIT" property="valid" />
+    <result column="create_time" jdbcType="DATE" property="createTime" />
+    <result column="create_by" jdbcType="BIGINT" property="createBy" />
+    <result column="update_time" jdbcType="DATE" property="updateTime" />
+    <result column="update_by" jdbcType="BIGINT" property="updateBy" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    user_id, user_code, user_name, password, shop_code, sex, mobile, email, valid, create_time, 
+    create_by, update_time, update_by
+  </sql>
+  <select id="selectByUserCode" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from yem_user
+    where user_code = #{userCode,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from yem_user
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yem.entity.YemUser">
+    insert into yem_user (user_id, user_code, user_name, 
+      password, shop_code, sex, 
+      mobile, email, valid, create_time, 
+      create_by, update_time, update_by
+      )
+    values (#{userId,jdbcType=VARCHAR}, #{userCode,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{shopCode,jdbcType=BIGINT}, #{sex,jdbcType=BIT}, 
+      #{mobile,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{valid,jdbcType=BIT}, #{createTime,jdbcType=DATE}, 
+      #{createBy,jdbcType=BIGINT}, #{updateTime,jdbcType=DATE}, #{updateBy,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yem.entity.YemUser">
+    insert into yem_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="userCode != null">
+        user_code,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="shopCode != null">
+        shop_code,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="valid != null">
+        valid,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userCode != null">
+        #{userCode,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="shopCode != null">
+        #{shopCode,jdbcType=BIGINT},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=BIT},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="valid != null">
+        #{valid,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=DATE},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByUserCodeSelective" parameterType="com.yem.entity.YemUser">
+    update yem_user
+    <set>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="shopCode != null">
+        shop_code = #{shopCode,jdbcType=BIGINT},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=BIT},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="valid != null">
+        valid = #{valid,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=BIGINT},
+      </if>
+    </set>
+    where user_code = #{userCode,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yem.entity.YemUser">
+    update yem_user
+    set user_code = #{userCode,jdbcType=BIGINT},
+      user_name = #{userName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      shop_code = #{shopCode,jdbcType=BIGINT},
+      sex = #{sex,jdbcType=BIT},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      valid = #{valid,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=DATE},
+      create_by = #{createBy,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=DATE},
+      update_by = #{updateBy,jdbcType=BIGINT}
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="selectUserList" parameterType="com.yem.dto.YemUserDTO" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from yem_user
+    where 1 = 1
+    <if test="userCode != null">
+      and user_code = #{userCode,jdbcType=BIGINT},
+    </if>
+    <if test="userName != null">
+      and user_name = #{userName,jdbcType=VARCHAR},
+    </if>
+    <if test="shopCode != null">
+      and shop_code = #{shopCode,jdbcType=BIGINT},
+    </if>
+    <if test="sex != null">
+      #{sex,jdbcType=BIT},
+    </if>
+    <if test="mobile != null">
+      and mobile = #{mobile,jdbcType=VARCHAR},
+    </if>
+    <if test="email != null">
+      and email = #{email,jdbcType=VARCHAR},
+    </if>
+    <if test="valid != null">
+      and valid = #{valid,jdbcType=BIT},
+    </if>
+    <if test="createTime != null">
+      and create_time = #{createTime,jdbcType=DATE},
+    </if>
+    <if test="createBy != null">
+      and create_by = #{createBy,jdbcType=BIGINT},
+    </if>
+    <if test="updateTime != null">
+      and update_time = #{updateTime,jdbcType=DATE},
+    </if>
+    <if test="updateBy != null">
+      and update_by = #{updateBy,jdbcType=BIGINT},
+    </if>
+    limit #{start, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectUserListCount" parameterType="com.yem.dto.YemUserDTO" resultType="java.lang.Integer">
+    select 
+    count(user_id) as cnt
+    from yem_user
+    where 1 = 1
+    <if test="userCode != null">
+      and user_code = #{userCode,jdbcType=BIGINT},
+    </if>
+    <if test="userName != null">
+      and user_name = #{userName,jdbcType=VARCHAR},
+    </if>
+    <if test="shopCode != null">
+      and shop_code = #{shopCode,jdbcType=BIGINT},
+    </if>
+    <if test="sex != null">
+      #{sex,jdbcType=BIT},
+    </if>
+    <if test="mobile != null">
+      and mobile = #{mobile,jdbcType=VARCHAR},
+    </if>
+    <if test="email != null">
+      and email = #{email,jdbcType=VARCHAR},
+    </if>
+    <if test="valid != null">
+      and valid = #{valid,jdbcType=BIT},
+    </if>
+    <if test="createTime != null">
+      and create_time = #{createTime,jdbcType=DATE},
+    </if>
+    <if test="createBy != null">
+      and create_by = #{createBy,jdbcType=BIGINT},
+    </if>
+    <if test="updateTime != null">
+      and update_time = #{updateTime,jdbcType=DATE},
+    </if>
+    <if test="updateBy != null">
+      and update_by = #{updateBy,jdbcType=BIGINT},
+    </if>
+  </select>
+</mapper>

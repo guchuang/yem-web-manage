@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>角色修改</title>
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no">
+<link rel="stylesheet" href="./css/font.css">
+<link rel="stylesheet" href="./css/xadmin.css">
+<script type="text/javascript" src="./js/jquery.min.js"></script>
+<script type="text/javascript" src="./lib/layui/layui.js"charset="utf-8"></script>
+<script type="text/javascript" src="./js/xadmin.js"></script>
+<script type="text/javascript" src="./js/tool.js"></script>
+</head>
+
+<body>
+	<div class="x-body">
+		<div class="layui-form layui-form-pane">
+			<div class="layui-form-item">
+				<label for="name" class="layui-form-label"> <span
+					class="x-red">*</span>角色名
+				</label>
+				<div class="layui-input-inline">
+					<input type="text" id="roleName" name="roleName" required=""
+						lay-verify="required" value="" autocomplete="off"
+						class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item layui-form-text">
+				<label class="layui-form-label"> 拥有权限 </label>
+				<table class="layui-table layui-input-block">
+					<tbody id="permissionData">
+					</tbody>
+				</table>
+			</div>
+			<div class="layui-form-item layui-form-text">
+				<label for="desc" class="layui-form-label"> 描述 </label>
+				<div class="layui-input-block">
+					<textarea placeholder="请输入内容" id="description" name="description"
+						class="layui-textarea"></textarea>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<button class="layui-btn" lay-submit="" lay-filter="save" onclick="save()">保存</button>
+			</div>
+		</div>
+	</div>
+	<script>
+		$(document).ready(function() {
+			init();
+		});
+
+		function init() {
+			var roleCode = parent.document.getElementById("tempRoleCode").value;
+			initRole(roleCode);
+		}
+
+		function initRole(roleCode) {
+			var param = new RequestData();
+			param.requestBody = {
+				roleCode : roleCode
+			};
+			ajax.post(_context.path + "role/query", param, function(data) {
+				$("input[name=roleName]").val(data.yemRole.roleName);
+				$("#description").html(data.yemRole.description);
+				queryPermission(data.permissions);
+			});
+		}
+		
+		function queryPermission(rolePermission) {
+			var roles = rolePermission;
+			var param = new RequestData();
+			param.requestBody = {
+				pageSize : 100,
+				pageNo : 1
+			};
+			ajax.post(_context.path + "permission/list", param, function(data) {
+
+				$("#permissionData").html("");
+				var permissions = data.yemPermissions;
+				
+				for (var index = 0; index < permissions.length; index ++) {
+					var permission = permissions[index];
+					permission.checked = false;
+					for (var i = 0; i < roles.length; i ++) {
+						var rolePermission = roles[i];
+						if (permission.permissionCode == rolePermission.permissionCode) {
+							permission.checked = true;
+						}
+					}
+				}
+				
+				var str = '<tr><td><div class="layui-input-block">';
+				for (var index = 0; index < permissions.length; index ++) {
+					var permission = permissions[index];
+					
+					if (permission.checked) {
+						str += '<input name="permission" checked = "" type="checkbox" value="' + permission.permissionCode + '">' + permission.permissionName;
+					} else {
+						str += '<input name="permission" type="checkbox" value="' + permission.permissionCode + '">' + permission.permissionName;
+					}
+					if (index % 5 == 0 && index != 0 && (index + 1) != permissions.length) {
+						str += "</div></td></tr>";
+						str += '<tr><td><div class="layui-input-block">';
+					}
+				}
+				str += "</div></td></tr>";
+				
+				$("#permissionData").append(str);
+				initPage();
+			});
+		}
+		
+		function initPage() {
+			layui.use([ 'form', 'layer' ], function() {
+				$ = layui.jquery;
+				var form = layui.form, layer = layui.layer;
+
+				form.on('checkbox(father)', function(data) {
+
+					if (data.elem.checked) {
+						$(data.elem).parent().siblings('td').find('input').prop(
+								"checked", true);
+						form.render();
+					} else {
+						$(data.elem).parent().siblings('td').find('input').prop(
+								"checked", false);
+						form.render();
+					}
+				});
+			});
+		}
+		
+		function save() {
+			var roleCode = parent.document.getElementById("tempRoleCode").value;
+			var roleName = $("#roleName").val();
+			var description = $("#description").val();
+			var param = new RequestData();
+			param.requestBody = {
+				roleCode : roleCode,
+				roleName : roleName,
+				description: description,
+				permissions: getChecked("permission")
+			};
+			ajax.post(_context.path + "role/modify", param, function(data) {
+				if (data.respCode == '0000') {
+					layer.msg('保存成功!', {icon: 6, time: 2000});
+				} else {
+					layer.msg(data.respMsg, {icon: 5, time: 2000});
+				}
+			});
+		}
+	</script>
+	<script>
+		var _hmt = _hmt || [];
+		(function() {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+</body>
+
+</html>

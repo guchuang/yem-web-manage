@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yem.web.manage.dao.YemMcCodeMapper">
+  <resultMap id="BaseResultMap" type="com.yem.entity.YemMcCode">
+    <id column="mccode_id" jdbcType="VARCHAR" property="mccodeId" />
+    <result column="mccode_type" jdbcType="VARCHAR" property="mccodeType" />
+    <result column="mccode_pre_value" jdbcType="BIGINT" property="mccodePreValue" />
+    <result column="mccode_value" jdbcType="BIGINT" property="mccodeValue" />
+    <result column="current_value" jdbcType="BIGINT" property="currentValue" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    mccode_id, mccode_type, mccode_pre_value, mccode_value, current_value
+  </sql>
+  <select id="selectByMcCodeType" parameterType="com.yem.entity.YemMcCode" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from yem_mccode
+    where mccode_type = #{mccodeType,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from yem_mccode
+    where mccode_id = #{mccodeId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yem.entity.YemMcCode">
+    insert into yem_mccode (mccode_id, mccode_type, mccode_pre_value, 
+      mccode_value)
+    values (#{mccodeId,jdbcType=VARCHAR}, #{mccodeType,jdbcType=VARCHAR}, #{mccodePreValue,jdbcType=BIGINT}, 
+      #{mccodeValue,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yem.entity.YemMcCode">
+    insert into yem_mccode
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="mccodeId != null">
+        mccode_id,
+      </if>
+      <if test="mccodeType != null">
+        mccode_type,
+      </if>
+      <if test="mccodePreValue != null">
+        mccode_pre_value,
+      </if>
+      <if test="mccodeValue != null">
+        mccode_value,
+      </if>
+      <if test="currentValue != null">
+        current_value,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="mccodeId != null">
+        #{mccodeId,jdbcType=VARCHAR},
+      </if>
+      <if test="mccodeType != null">
+        #{mccodeType,jdbcType=VARCHAR},
+      </if>
+      <if test="mccodePreValue != null">
+        #{mccodePreValue,jdbcType=BIGINT},
+      </if>
+      <if test="mccodeValue != null">
+        #{mccodeValue,jdbcType=BIGINT},
+      </if>
+      <if test="currentValue != null">
+        #{currentValue,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yem.entity.YemMcCode">
+    update yem_mccode
+    <set>
+      <if test="mccodeType != null">
+        mccode_type = #{mccodeType,jdbcType=VARCHAR},
+      </if>
+      <if test="mccodePreValue != null">
+        mccode_pre_value = #{mccodePreValue,jdbcType=BIGINT},
+      </if>
+      <if test="mccodeValue != null">
+        mccode_value = #{mccodeValue,jdbcType=BIGINT},
+      </if>
+      <if test="currentValue != null">
+        current_value = #{currentValue,jdbcType=BIGINT},
+      </if>
+    </set>
+    where mccode_id = #{mccodeId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yem.entity.YemMcCode">
+    update yem_mccode
+    set mccode_type = #{mccodeType,jdbcType=VARCHAR},
+      mccode_pre_value = #{mccodePreValue,jdbcType=BIGINT},
+      mccode_value = #{mccodeValue,jdbcType=BIGINT}
+      current_value = #{currentValue,jdbcType=BIGINT}
+    where mccode_id = #{mccodeId,jdbcType=VARCHAR}
+  </update>
+</mapper>

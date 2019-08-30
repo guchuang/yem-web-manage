@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yem.web.manage.dao.YemSubscribeMapper">
+	<resultMap id="BaseResultMap" type="com.yem.entity.YemSubscribe">
+		<id column="subscribe_id" jdbcType="VARCHAR" property="subscribeId" />
+		<result column="subscribe_code" jdbcType="BIGINT" property="subscribeCode" />
+		<result column="member_code" jdbcType="BIGINT" property="memberCode" />
+		<result column="server_code" jdbcType="BIGINT" property="serverCode" />
+		<result column="shop_code" jdbcType="BIGINT" property="shopCode" />
+		<result column="subscribe_time" jdbcType="DATE" property="subscribeTime" />
+		<result column="remark" jdbcType="VARCHAR" property="remark" />
+		<result column="valid" jdbcType="BIT" property="valid" />
+		<result column="create_time" jdbcType="DATE" property="createTime" />
+		<result column="create_by" jdbcType="BIGINT" property="createBy" />
+		<result column="update_time" jdbcType="DATE" property="updateTime" />
+		<result column="update_by" jdbcType="BIGINT" property="updateBy" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		subscribe_id, subscribe_code, member_code, server_code, shop_code, subscribe_time, remark, valid,
+		create_time, create_by, update_time, update_by
+	</sql>
+	<select id="selectBySubscribeCode" parameterType="java.lang.Long"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from yem_subscribe
+		where subscribe_code = #{subscribeCode,jdbcType=BIGINT}
+	</select>
+
+	<insert id="insertSelective" parameterType="com.yem.entity.YemSubscribe">
+		insert into yem_subscribe
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="subscribeId != null">
+				subscribe_id,
+			</if>
+			<if test="subscribeCode != null">
+				subscribe_code,
+			</if>
+			<if test="memberCode != null">
+				member_code,
+			</if>
+			<if test="serverCode != null">
+				server_code,
+			</if>
+			<if test="shopCode != null">
+				shop_code,
+			</if>
+			<if test="subscribeTime != null">
+				subscribe_time,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="valid != null">
+				valid,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="createBy != null">
+				create_by,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="updateBy != null">
+				update_by,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="subscribeId != null">
+				#{subscribeId,jdbcType=VARCHAR},
+			</if>
+			<if test="subscribeCode != null">
+				#{subscribeCode,jdbcType=BIGINT},
+			</if>
+			<if test="memberCode != null">
+				#{memberCode,jdbcType=BIGINT},
+			</if>
+			<if test="serverCode != null">
+				#{serverCode,jdbcType=BIGINT},
+			</if>
+			<if test="shopCode != null">
+				#{shopCode,jdbcType=BIGINT},
+			</if>
+			<if test="subscribeTime != null">
+				#{subscribeTime,jdbcType=DATE},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="valid != null">
+				#{valid,jdbcType=BIT},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=DATE},
+			</if>
+			<if test="createBy != null">
+				#{createBy,jdbcType=BIGINT},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=DATE},
+			</if>
+			<if test="updateBy != null">
+				#{updateBy,jdbcType=BIGINT},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateBySubscribeCodeSelective" parameterType="com.yem.entity.YemSubscribe">
+		update yem_subscribe
+		<set>
+			<if test="serverCode != null">
+				server_code = #{serverCode,jdbcType=BIGINT},
+			</if>
+			<if test="shopCode != null">
+				shop_code = #{shopCode,jdbcType=BIGINT},
+			</if>
+			<if test="subscribeTime != null">
+				subscribe_time = #{subscribeTime,jdbcType=DATE},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="valid != null">
+				valid = #{valid,jdbcType=BIT},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=DATE},
+			</if>
+			<if test="createBy != null">
+				create_by = #{createBy,jdbcType=BIGINT},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=DATE},
+			</if>
+			<if test="updateBy != null">
+				update_by = #{updateBy,jdbcType=BIGINT},
+			</if>
+		</set>
+		where subscribe_code = #{subscribeCode,jdbcType=BIGINT}
+	</update>
+
+	<select id="selectSubscribeList" parameterType="com.yem.dto.YemSubscribeDTO"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from yem_subscribe
+		where 1 = 1
+		<if test="subscribeCode != null">
+			and subscribe_code = #{subscribeCode,jdbcType=BIGINT}
+		</if>
+		<if test="memberCode != null">
+			and member_code = #{memberCode,jdbcType=BIGINT}
+		</if>
+		<if test="serverCode != null">
+			and server_code = #{serverCode,jdbcType=BIGINT}
+		</if>
+		<if test="shopCode != null">
+			and shop_code = #{shopCode,jdbcType=BIGINT}
+		</if>
+		<if test="subscribeTime != null">
+			and subscribe_time = #{subscribeTime,jdbcType=DATE}
+		</if>
+		<if test="remark != null">
+			and remark = #{remark,jdbcType=VARCHAR}
+		</if>
+		<if test="valid != null">
+			and valid = #{valid,jdbcType=BIT}
+		</if>
+		<if test="createTime != null">
+			and create_time = #{createTime,jdbcType=DATE}
+		</if>
+		<if test="createBy != null">
+			and create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateTime != null">
+			and update_time = #{updateTime,jdbcType=DATE}
+		</if>
+		<if test="updateBy != null">
+			and update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		limit #{start, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
+	</select>
+	
+
+	<select id="selectSubscribeListCount" parameterType="com.yem.dto.YemSubscribeDTO"
+		resultType="java.lang.Integer">
+		select
+		count(subscribe_id) as cnt
+		from yem_subscribe
+		where 1 = 1
+		<if test="subscribeCode != null">
+			and subscribe_code = #{subscribeCode,jdbcType=BIGINT}
+		</if>
+		<if test="memberCode != null">
+			and member_code = #{memberCode,jdbcType=BIGINT}
+		</if>
+		<if test="serverCode != null">
+			and server_code = #{serverCode,jdbcType=BIGINT}
+		</if>
+		<if test="shopCode != null">
+			and shop_code = #{shopCode,jdbcType=BIGINT}
+		</if>
+		<if test="subscribeTime != null">
+			and subscribe_time = #{subscribeTime,jdbcType=DATE}
+		</if>
+		<if test="remark != null">
+			and remark = #{remark,jdbcType=VARCHAR}
+		</if>
+		<if test="valid != null">
+			and valid = #{valid,jdbcType=BIT}
+		</if>
+		<if test="createTime != null">
+			and create_time = #{createTime,jdbcType=DATE}
+		</if>
+		<if test="createBy != null">
+			and create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateTime != null">
+			and update_time = #{updateTime,jdbcType=DATE}
+		</if>
+		<if test="updateBy != null">
+			and update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+	</select>
+</mapper>

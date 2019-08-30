@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yem.web.manage.dao.YemPermissionMapper">
+	<resultMap id="BaseResultMap" type="com.yem.entity.YemPermission">
+		<id column="permission_id" jdbcType="VARCHAR" property="permissionId" />
+		<result column="permission_code" jdbcType="BIGINT" property="permissionCode" />
+		<result column="permission_name" jdbcType="VARCHAR" property="permissionName" />
+		<result column="method" jdbcType="VARCHAR" property="method" />
+		<result column="zuul_prefix" jdbcType="VARCHAR" property="zuulPrefix" />
+		<result column="server_prefix" jdbcType="VARCHAR" property="serverPrefix" />
+		<result column="uri" jdbcType="VARCHAR" property="uri" />
+		<result column="valid" jdbcType="BIT" property="valid" />
+		<result column="create_time" jdbcType="DATE" property="createTime" />
+		<result column="create_by" jdbcType="BIGINT" property="createBy" />
+		<result column="update_time" jdbcType="DATE" property="updateTime" />
+		<result column="update_by" jdbcType="BIGINT" property="updateBy" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		permission_id, permission_code, permission_name, method,
+		zuul_prefix, server_prefix,
+		uri, valid, create_time, create_by,
+		update_time, update_by
+	</sql>
+	<select id="selectByPermissionCode" parameterType="java.lang.Long"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from yem_permission
+		where permission_code =
+		#{permissionCode,jdbcType=BIGINT}
+	</select>
+
+	<insert id="insertSelective" parameterType="com.yem.entity.YemPermission">
+		insert into yem_permission
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="permissionId != null and permissionId != ''">
+				permission_id,
+			</if>
+			<if test="permissionCode != null and permissionCode != ''">
+				permission_code,
+			</if>
+			<if test="permissionName != null and permissionName != ''">
+				permission_name,
+			</if>
+			<if test="method != null and method != ''">
+				method,
+			</if>
+			<if test="zuulPrefix != null and zuulPrefix != ''">
+				zuul_prefix,
+			</if>
+			<if test="serverPrefix != null and serverPrefix != ''">
+				server_prefix,
+			</if>
+			<if test="uri != null and uri != ''">
+				uri,
+			</if>
+			<if test="valid != null and valid != ''">
+				valid,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="createBy != null">
+				create_by,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="updateBy != null">
+				update_by,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="permissionId != null and permissionId != ''">
+				#{permissionId,jdbcType=VARCHAR},
+			</if>
+			<if test="permissionCode != null and permissionCode != ''">
+				#{permissionCode,jdbcType=BIGINT},
+			</if>
+			<if test="permissionName != null and permissionName != ''">
+				#{permissionName,jdbcType=VARCHAR},
+			</if>
+			<if test="method != null and method != ''">
+				#{method,jdbcType=VARCHAR},
+			</if>
+			<if test="zuulPrefix != null and zuulPrefix != ''">
+				#{zuulPrefix,jdbcType=VARCHAR},
+			</if>
+			<if test="serverPrefix != null and serverPrefix != ''">
+				#{serverPrefix,jdbcType=VARCHAR},
+			</if>
+			<if test="uri != null and uri != ''">
+				#{uri,jdbcType=VARCHAR},
+			</if>
+			<if test="valid != null and valid != ''">
+				#{valid,jdbcType=BIT},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=DATE},
+			</if>
+			<if test="createBy != null">
+				#{createBy,jdbcType=BIGINT},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=DATE},
+			</if>
+			<if test="updateBy != null">
+				#{updateBy,jdbcType=BIGINT},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPermissionCodeSelective" parameterType="com.yem.entity.YemPermission">
+		update yem_permission
+		<set>
+			<if test="permissionName != null">
+				permission_name = #{permissionName,jdbcType=VARCHAR},
+			</if>
+			<if test="method != null">
+				method = #{method,jdbcType=VARCHAR},
+			</if>
+			<if test="zuulPrefix != null">
+				zuul_prefix = #{zuulPrefix,jdbcType=VARCHAR},
+			</if>
+			<if test="serverPrefix != null">
+				server_prefix = #{serverPrefix,jdbcType=VARCHAR},
+			</if>
+			<if test="uri != null">
+				uri = #{uri,jdbcType=VARCHAR},
+			</if>
+			<if test="valid != null">
+				valid = #{valid,jdbcType=BIT},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=DATE},
+			</if>
+			<if test="createBy != null">
+				create_by = #{createBy,jdbcType=BIGINT},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=DATE},
+			</if>
+			<if test="updateBy != null">
+				update_by = #{updateBy,jdbcType=BIGINT},
+			</if>
+		</set>
+		where permission_code = #{permissionCode,jdbcType=BIGINT}
+	</update>
+
+	<select id="selectPermissionList" parameterType="com.yem.dto.YemPermissionDTO"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from yem_permission
+		where 1 = 1
+		<if test="permissionCode != null and permissionCode != ''">
+			and permission_code = #{permissionCode,jdbcType=BIGINT}
+		</if>
+		<if test="permissionName != null and permissionName != ''">
+			and permission_name = #{permissionName,jdbcType=VARCHAR}
+		</if>
+		<if test="method != null and method != ''">
+			and method = #{method,jdbcType=VARCHAR}
+		</if>
+		<if test="zuulPrefix != null and zuulPrefix != ''">
+			and zuul_prefix = #{zuulPrefix,jdbcType=VARCHAR}
+		</if>
+		<if test="serverPrefix != null and serverPrefix != ''">
+			and server_prefix = #{serverPrefix,jdbcType=VARCHAR}
+		</if>
+		<if test="uri != null and uri != ''">
+			and uri = #{uri,jdbcType=VARCHAR}
+		</if>
+		<if test="valid != null and valid != ''">
+			and valid = #{valid,jdbcType=BIT}
+		</if>
+		<if test="createTime != null and createTime != ''">
+			and create_time = #{createTime,jdbcType=DATE}
+		</if>
+		limit #{start, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
+	</select>
+
+
+	<select id="selectPermissionListCount" parameterType="com.yem.dto.YemPermissionDTO"
+		resultType="java.lang.Integer">
+		select count(permission_id) as cnt
+		from yem_permission
+		where 1 = 1
+		
+		<if test="permissionCode != null and permissionCode != ''">
+			and permission_code = #{permissionCode,jdbcType=BIGINT}
+		</if>
+		<if test="permissionName != null and permissionName != ''">
+			and permission_name = #{permissionName,jdbcType=VARCHAR}
+		</if>
+		<if test="method != null and method != ''">
+			and method = #{method,jdbcType=VARCHAR}
+		</if>
+		<if test="zuulPrefix != null and zuulPrefix != ''">
+			and zuul_prefix = #{zuulPrefix,jdbcType=VARCHAR}
+		</if>
+		<if test="serverPrefix != null and serverPrefix != ''">
+			and server_prefix = #{serverPrefix,jdbcType=VARCHAR}
+		</if>
+		<if test="uri != null and uri != ''">
+			and uri = #{uri,jdbcType=VARCHAR}
+		</if>
+		<if test="valid != null and valid != ''">
+			and valid = #{valid,jdbcType=BIT}
+		</if>
+		<if test="createTime != null and createTime != ''">
+			and create_time = #{createTime,jdbcType=DATE}
+		</if>
+	</select>
+	
+	<select id="selectPermissionByRoleCode" parameterType="java.lang.Long"
+		resultMap="BaseResultMap">
+		select 
+		p.permission_id, p.permission_code, p.permission_name, p.method,
+		p.zuul_prefix, p.server_prefix,
+		p.uri, p.valid, p.create_time, p.create_by,
+		p.update_time, p.update_by
+		from yem_permission p
+		LEFT JOIN yem_role_permission rp
+		on p.permission_code = rp.permission_code
+		where rp.role_code = #{roleCode, jdbcType = BIGINT}
+	</select>
+</mapper>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>服务修改</title>
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no">
+<link rel="stylesheet" href="./css/font.css">
+<link rel="stylesheet" href="./css/xadmin.css">
+<script type="text/javascript" src="./js/jquery.min.js"></script>
+<script type="text/javascript" src="./lib/layui/layui.js"
+	charset="utf-8"></script>
+<script type="text/javascript" src="./js/xadmin.js"></script>
+<script type="text/javascript" src="./js/tool.js"></script>
+</head>
+
+<body>
+	<div class="x-body">
+		<div class="layui-form layui-form-pane">
+			<div class="layui-form-item">
+				<label for="name" class="layui-form-label"> <span
+					class="x-red">*</span>服务名
+				</label>
+				<div class="layui-input-inline">
+					<input type="text" id="serverName" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label for="name" class="layui-form-label"> <span
+					class="x-red">*</span>价格
+				</label>
+				<div class="layui-input-inline">
+					<input type="text" id="price" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item layui-form-text">
+				<label for="desc" class="layui-form-label"> 描述 </label>
+				<div class="layui-input-block">
+					<textarea placeholder="请输入内容" id="description" name="description"
+						class="layui-textarea"></textarea>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<button class="layui-btn" onclick="save()">保存</button>
+			</div>
+		</div>
+	</div>
+	<script>
+		var checkType = "ADD";
+		var currentServerCode;
+		$(document).ready(function() {
+			initPage();
+			init();
+		});
+
+		function init() {
+			currentServerCode = parent.document.getElementById("tempserverCode").value;
+			parent.document.getElementById("tempserverCode").value = "";
+			if (currentServerCode != null && currentServerCode != undefined && currentServerCode != '') {
+				checkType = "EDIT";
+				initserver(currentServerCode);
+			}
+		}
+
+		function initserver(serverCode) {
+			var param = new RequestData();
+			param.requestBody = {
+				serverCode : serverCode
+			};
+			ajax.post(_context.path + "server/query", param, function(data) {
+				if (data.respCode == '0000') {
+					$("#serverName").val(data.yemserver.serverName);
+					//$("#method").val(data.yemserver.method);
+					$("#zuulPrefix").val(data.yemserver.zuulPrefix);
+					$("#serverPrefix").val(data.yemserver.serverPrefix);
+					$("#uri").val(data.yemserver.uri);
+				}
+			});
+		}
+		
+		function initPage() {
+			layui.use(['laydate', 'form'], function() {
+	            var laydate = layui.laydate;
+	            //执行一个laydate实例
+	            laydate.render({
+	                elem: '#start' //指定元素
+	            });
+	            //执行一个laydate实例
+	            laydate.render({
+	                elem: '#end' //指定元素
+	            });
+	        });
+		}
+		
+		function save() {
+			var url = _context.path + "server/add";
+			if (checkType == 'EDIT') {
+				url = _context.path + "server/modify";
+			}
+			var serverName = $("#serverName").val();
+			var method = $("#method").val();
+			var zuulPrefix = $("#zuulPrefix").val();
+			var serverPrefix = $("#serverPrefix").val();
+			var uri = $("#uri").val();
+			var param = new RequestData();
+			param.requestBody = {
+				serverCode : currentServerCode,
+				serverName : serverName,
+				method:method,
+				zuulPrefix:zuulPrefix,
+				serverPrefix:serverPrefix,
+				uri:uri,
+				valid:1
+			};
+			ajax.post(url, param, function(data) {
+				if (data.respCode == '0000') {
+					layer.msg('保存成功!', {icon: 6, time: 2000});
+				} else {
+					layer.msg(data.respMsg, {icon: 5, time: 2000});
+				}
+			});
+		}
+	</script>
+	<script>
+		var _hmt = _hmt || [];
+		(function() {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+</body>
+
+</html>
